@@ -1,0 +1,8 @@
+RubyQuiz #50 - Text Image (http://www.rubyquiz.com/quiz50.html)
+===============================================================
+
+To see the duck, run "net.tomhermann.textimage.Main" from an IDE, 
+or if you prefer to use Gradle run the following commands:
+
+gradle jar
+java -jar build/libs/text-image-1.0.0.RELEASE.jar
