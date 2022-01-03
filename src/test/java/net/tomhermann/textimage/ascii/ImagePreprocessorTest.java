@@ -1,30 +1,27 @@
 package net.tomhermann.textimage.ascii;
 
-import static org.junit.Assert.assertSame;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import net.tomhermann.textimage.imaging.ImageFilter;
+import net.tomhermann.textimage.support.Dimensions;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.awt.image.BufferedImage;
 
-import net.tomhermann.textimage.imaging.ImageFilter;
-import net.tomhermann.textimage.support.Dimensions;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.mockito.Mockito.*;
 
-import org.junit.Before;
-import org.junit.Test;
-
-public class ImagePreprocessorTest {
-	private ImagePreprocessor imageProcessor;
+@ExtendWith(MockitoExtension.class)
+class ImagePreprocessorTest {
+	@Mock
 	private ImageFilter imageFilter;
-	
-	@Before
-	public void setup() {
-		this.imageFilter = mock(ImageFilter.class);
-		this.imageProcessor = new ImagePreprocessor(imageFilter);
-	}
-	
+	@InjectMocks
+	private ImagePreprocessor imageProcessor;
+
 	@Test
-	public void whenImageIsPreprocessedItIsResizedDarkenedAndConvertedToGrayScale() {
+	void whenImageIsPreprocessedItIsResizedDarkenedAndConvertedToGrayScale() {
         Dimensions dimensions = new Dimensions(100, 100);
 		BufferedImage originalImg = mock(BufferedImage.class);
 		BufferedImage resizedImg = mock(BufferedImage.class);

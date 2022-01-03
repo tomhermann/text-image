@@ -1,52 +1,49 @@
 package net.tomhermann.textimage.ascii;
 
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertThat;
-import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import net.tomhermann.textimage.colors.ColorToCharacterConverter;
+import net.tomhermann.textimage.support.Dimensions;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.util.List;
 
-import net.tomhermann.textimage.colors.ColorToCharacterConverter;
-import net.tomhermann.textimage.support.Dimensions;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
-import org.junit.Before;
-import org.junit.Test;
-
-public class AsciiImageProcessorTest {
-	private AsciiImageProcessor asciiImageProcessor;
+@ExtendWith(MockitoExtension.class)
+class AsciiImageProcessorTest {
+	@Mock
 	private ImagePreprocessor imagePreprocessor;
+	@Mock
 	private ColorToCharacterConverter colorToCharacterConverter;
-	
-	@Before
-	public void setup() {
-		this.imagePreprocessor = mock(ImagePreprocessor.class);
-		this.colorToCharacterConverter = mock(ColorToCharacterConverter.class);
-		asciiImageProcessor = new AsciiImageProcessor(imagePreprocessor, colorToCharacterConverter);
-	}
-	
+	@InjectMocks
+	private AsciiImageProcessor asciiImageProcessor;
+
 	@Test
-	public void whenGivenImageDimensionsProvideOneRowOfTextPerPixelOfHeight() {
-		Dimensions resizedImageDimensions = new Dimensions(5, 5);
-		BufferedImage originalImg = mock(BufferedImage.class);
-		BufferedImage preprocessedImage = mock(BufferedImage.class);
+	void whenGivenImageDimensionsProvideOneRowOfTextPerPixelOfHeight() {
+		var resizedImageDimensions = new Dimensions(5, 5);
+		var originalImg = mock(BufferedImage.class);
+		var preprocessedImage = mock(BufferedImage.class);
 		when(imagePreprocessor.preprocess(originalImg, resizedImageDimensions)).thenReturn(preprocessedImage);
-		when(colorToCharacterConverter.convert(any(Color.class))).thenReturn('!');
+		when(colorToCharacterConverter.convert(any())).thenReturn('!');
 		
-		List<String> ascii = asciiImageProcessor.toAscii(originalImg, resizedImageDimensions);
+		var ascii = asciiImageProcessor.toAscii(originalImg, resizedImageDimensions);
 
-        assertThat(ascii.size(), is(equalTo(resizedImageDimensions.height())));
+        assertThat(ascii.size()).isEqualTo(resizedImageDimensions.height());
 	}
 
 	@Test
-	public void eachRowIsGeneratedFromConcatenatedCharactersRepresentingHorizontalPixels() {
-		Dimensions resizedImageDimensions = new Dimensions(2, 1);
-		BufferedImage originalImg = mock(BufferedImage.class);
-		BufferedImage preprocessedImage = mock(BufferedImage.class);
+	void eachRowIsGeneratedFromConcatenatedCharactersRepresentingHorizontalPixels() {
+		var resizedImageDimensions = new Dimensions(2, 1);
+		var originalImg = mock(BufferedImage.class);
+		var preprocessedImage = mock(BufferedImage.class);
 		when(imagePreprocessor.preprocess(originalImg, resizedImageDimensions)).thenReturn(preprocessedImage);
 		when(preprocessedImage.getRGB(0, 0)).thenReturn(Color.BLACK.getRGB());
 		when(preprocessedImage.getRGB(1, 0)).thenReturn(Color.WHITE.getRGB());
@@ -55,7 +52,7 @@ public class AsciiImageProcessorTest {
 		
 		List<String> ascii = asciiImageProcessor.toAscii(originalImg, resizedImageDimensions);
 
-        assertThat(ascii.size(), is(equalTo(resizedImageDimensions.height())));
-		assertThat(ascii.get(0), is(equalTo("@!")));
+        assertThat(ascii.size()).isEqualTo(resizedImageDimensions.height());
+		assertThat(ascii.get(0)).isEqualTo("@!");
 	}
 }
