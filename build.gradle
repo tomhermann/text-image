@@ -1,27 +1,25 @@
-apply plugin: 'java'
+plugins {
+	id 'application'
+}
 
 version = '1.0.0.RELEASE'
-sourceCompatibility = 1.6
-targetCompatibility = 1.6
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(17)
+	}
+}
 
 repositories { 
 	mavenCentral()
 }
 
 dependencies {
-	testCompile group: 'junit', name: 'junit', version: '4.8.2'
-	testCompile group: 'org.mockito', name:'mockito-all', version: '1.8.5'
-	testCompile group: 'org.hamcrest', name:'hamcrest-all', version: '1.1'
+	testImplementation 	group: 'junit', name: 'junit', version: '4.8.2'
+	testImplementation group: 'org.mockito', name:'mockito-all', version: '1.8.5'
+	testImplementation group: 'org.hamcrest', name:'hamcrest-all', version: '1.1'
 }
 
-jar {
-	from "Ducky.png"
-	
-	manifest {
-		attributes(
-			"Implementation-Title": rootProject.name, 
-			"Implementation-Version": version,
-			"Main-Class": 'net.tomhermann.textimage.Main'
-		)
-	}
+application {
+	mainClass = 'net.tomhermann.textimage.Main'
 }
