@@ -13,9 +13,8 @@ import java.util.Collections;
 
 import org.junit.Test;
 
-
 public class ColorDistanceCalculatorTest {
-	private ColorDistanceCalculator calculator = new ColorDistanceCalculator();
+	private final ColorDistanceCalculator calculator = new ColorDistanceCalculator();
 	
 	@Test
 	public void euclideanDistanceIsSqrtOfTheSumOfAllColorDeltasEachSquared() {
@@ -23,6 +22,7 @@ public class ColorDistanceCalculatorTest {
 		assertThat(euclideanDistance, is(closeTo(319.45, 0.01)));
 	}
 
+	@Test
 	public void euclideanDistanceReveresedIsEquivalent() {
 		double euclideanDistance = calculator.euclideanDistance(Color.GREEN, Color.PINK);
 		assertThat(euclideanDistance, is(closeTo(319.45, 0.01)));
@@ -54,7 +54,7 @@ public class ColorDistanceCalculatorTest {
 	
 	@Test(expected=IllegalArgumentException.class)
 	public void whenGivenNoSupportedColorsThrowUp() {
-		calculator.findNearestSupportedColor(WHITE, Collections.<Color>emptyList());
+		calculator.findNearestSupportedColor(WHITE, Collections.emptyList());
 	}
 
 	@Test(expected=IllegalArgumentException.class)

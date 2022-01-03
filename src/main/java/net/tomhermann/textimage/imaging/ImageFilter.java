@@ -18,9 +18,9 @@ public class ImageFilter {
 	private static final ColorSpace CS_GRAY = ColorSpace.getInstance(ColorSpace.CS_GRAY);
 
 	public BufferedImage resizeImage(BufferedImage original, Dimensions dimensions) {
-		BufferedImage resizedImage = new BufferedImage(dimensions.getWidth(), dimensions.getHeight(), original.getType());
+		BufferedImage resizedImage = new BufferedImage(dimensions.width(), dimensions.height(), original.getType());
 		Graphics2D g = resizedImage.createGraphics();
-		g.drawImage(original, 0, 0, dimensions.getWidth(), dimensions.getHeight(), null);
+		g.drawImage(original, 0, 0, dimensions.width(), dimensions.height(), null);
 		g.dispose();
 		return resizedImage;
 	}

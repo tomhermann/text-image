@@ -25,7 +25,7 @@ public class ImagePreprocessorTest {
 	
 	@Test
 	public void whenImageIsPreprocessedItIsResizedDarkenedAndConvertedToGrayScale() {
-		Dimensions dimensions = Dimensions.of(100, 100);
+        Dimensions dimensions = new Dimensions(100, 100);
 		BufferedImage originalImg = mock(BufferedImage.class);
 		BufferedImage resizedImg = mock(BufferedImage.class);
 		BufferedImage darkenedImg = mock(BufferedImage.class);

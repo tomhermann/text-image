@@ -18,12 +18,12 @@ public class AsciiImageProcessor {
 	}
 	
 	public List<String> toAscii(BufferedImage originalImg, Dimensions resizedImageDimensions) {
-		List<String> output = new ArrayList<String>(resizedImageDimensions.getHeight());
+        List<String> output = new ArrayList<>(resizedImageDimensions.height());
 		BufferedImage preprocessedImage = imagePreprocessor.preprocess(originalImg, resizedImageDimensions);
-		
-		for (int y = 0; y < resizedImageDimensions.getHeight(); y++) {
+
+        for (int y = 0; y < resizedImageDimensions.height(); y++) {
 			StringBuilder sb = new StringBuilder();
-			for (int x = 0; x < resizedImageDimensions.getWidth(); x++) {
+			for (int x = 0; x < resizedImageDimensions.width(); x++) {
 				sb.append(colorToCharacter.convert(new Color(preprocessedImage.getRGB(x, y))));
 			}
 			output.add(sb.toString());

@@ -31,20 +31,20 @@ public class AsciiImageProcessorTest {
 	
 	@Test
 	public void whenGivenImageDimensionsProvideOneRowOfTextPerPixelOfHeight() {
-		Dimensions resizedImageDimensions = Dimensions.of(5,5);
+		Dimensions resizedImageDimensions = new Dimensions(5, 5);
 		BufferedImage originalImg = mock(BufferedImage.class);
 		BufferedImage preprocessedImage = mock(BufferedImage.class);
 		when(imagePreprocessor.preprocess(originalImg, resizedImageDimensions)).thenReturn(preprocessedImage);
 		when(colorToCharacterConverter.convert(any(Color.class))).thenReturn('!');
 		
 		List<String> ascii = asciiImageProcessor.toAscii(originalImg, resizedImageDimensions);
-		
-		assertThat(ascii.size(), is(equalTo(resizedImageDimensions.getHeight())));
+
+        assertThat(ascii.size(), is(equalTo(resizedImageDimensions.height())));
 	}
 
 	@Test
 	public void eachRowIsGeneratedFromConcatenatedCharactersRepresentingHorizontalPixels() {
-		Dimensions resizedImageDimensions = Dimensions.of(2, 1);
+		Dimensions resizedImageDimensions = new Dimensions(2, 1);
 		BufferedImage originalImg = mock(BufferedImage.class);
 		BufferedImage preprocessedImage = mock(BufferedImage.class);
 		when(imagePreprocessor.preprocess(originalImg, resizedImageDimensions)).thenReturn(preprocessedImage);
@@ -54,8 +54,8 @@ public class AsciiImageProcessorTest {
 		when(colorToCharacterConverter.convert(Color.WHITE)).thenReturn('!');
 		
 		List<String> ascii = asciiImageProcessor.toAscii(originalImg, resizedImageDimensions);
-		
-		assertThat(ascii.size(), is(equalTo(resizedImageDimensions.getHeight())));
+
+        assertThat(ascii.size(), is(equalTo(resizedImageDimensions.height())));
 		assertThat(ascii.get(0), is(equalTo("@!")));
 	}
 }
