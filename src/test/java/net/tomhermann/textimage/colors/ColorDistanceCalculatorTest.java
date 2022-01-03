@@ -12,65 +12,65 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class ColorDistanceCalculatorTest {
-	private final ColorDistanceCalculator calculator = new ColorDistanceCalculator();
-	
-	@Test
-	void euclideanDistanceIsSqrtOfTheSumOfAllColorDeltasEachSquared() {
-		var euclideanDistance = calculator.euclideanDistance(Color.PINK, Color.GREEN);
+    private final ColorDistanceCalculator calculator = new ColorDistanceCalculator();
 
-		assertThat(euclideanDistance).isCloseTo(319.45, Offset.offset(0.01));
-	}
+    @Test
+    void euclideanDistanceIsSqrtOfTheSumOfAllColorDeltasEachSquared() {
+        var euclideanDistance = calculator.euclideanDistance(Color.PINK, Color.GREEN);
 
-	@Test
-	void euclideanDistanceReveresedIsEquivalent() {
-		var euclideanDistance = calculator.euclideanDistance(Color.GREEN, Color.PINK);
+        assertThat(euclideanDistance).isCloseTo(319.45, Offset.offset(0.01));
+    }
 
-		assertThat(euclideanDistance).isCloseTo(319.45, Offset.offset(0.01));
-	}
-	
-	@Test
-	void nullColorsOnEuclideanRHSAreNotAllowed() {
-		//noinspection ConstantConditions
-		assertThatThrownBy(() -> calculator.euclideanDistance(Color.PINK, null))
-				.isInstanceOf(NullPointerException.class);
-	}
-	
-	@Test
-	void nullColorsOnEuclideanLHSAreNotAllowed() {
-		//noinspection ConstantConditions
-		assertThatThrownBy(() -> calculator.euclideanDistance(null, PINK))
-				.isInstanceOf(NullPointerException.class);
-	}
+    @Test
+    void euclideanDistanceReveresedIsEquivalent() {
+        var euclideanDistance = calculator.euclideanDistance(Color.GREEN, Color.PINK);
 
-	@Test
-	void whenGivenSomeColorAndCollectionOfAcceptableColorsFindNearest() {
-		var supportedColors = List.of(BLACK, WHITE);
+        assertThat(euclideanDistance).isCloseTo(319.45, Offset.offset(0.01));
+    }
 
-		var closestColor = calculator.findNearestSupportedColor(Color.decode("#111"), supportedColors);
+    @Test
+    void nullColorsOnEuclideanRHSAreNotAllowed() {
+        //noinspection ConstantConditions
+        assertThatThrownBy(() -> calculator.euclideanDistance(Color.PINK, null))
+            .isInstanceOf(NullPointerException.class);
+    }
 
-		assertThat(closestColor).isEqualTo(BLACK);
-	}
+    @Test
+    void nullColorsOnEuclideanLHSAreNotAllowed() {
+        //noinspection ConstantConditions
+        assertThatThrownBy(() -> calculator.euclideanDistance(null, PINK))
+            .isInstanceOf(NullPointerException.class);
+    }
 
-	@Test
-	void whenGivenTwoColorsWithSameDistanceChooseFirstFound() {
-		var supportedColors = List.of(YELLOW, MAGENTA);
+    @Test
+    void whenGivenSomeColorAndCollectionOfAcceptableColorsFindNearest() {
+        var supportedColors = List.of(BLACK, WHITE);
 
-		var closestColor = calculator.findNearestSupportedColor(PINK, supportedColors);
+        var closestColor = calculator.findNearestSupportedColor(Color.decode("#111"), supportedColors);
 
-		assertThat(closestColor).isEqualTo(YELLOW);
-	}
-	
-	@Test
-	void whenGivenNoSupportedColorsThrowUp() {
-		List<Color> supportedColors = emptyList();
+        assertThat(closestColor).isEqualTo(BLACK);
+    }
 
-		assertThatThrownBy(() -> calculator.findNearestSupportedColor(WHITE, supportedColors))
-			.isInstanceOf(IllegalArgumentException.class);
-	}
+    @Test
+    void whenGivenTwoColorsWithSameDistanceChooseFirstFound() {
+        var supportedColors = List.of(YELLOW, MAGENTA);
 
-	@Test
-	void whenGivenNullAsSupportedColorCollectionThrowUp() {
-		assertThatThrownBy(() -> calculator.findNearestSupportedColor(WHITE, null))
-			.isInstanceOf(IllegalArgumentException.class);
-	}
+        var closestColor = calculator.findNearestSupportedColor(PINK, supportedColors);
+
+        assertThat(closestColor).isEqualTo(YELLOW);
+    }
+
+    @Test
+    void whenGivenNoSupportedColorsThrowUp() {
+        List<Color> supportedColors = emptyList();
+
+        assertThatThrownBy(() -> calculator.findNearestSupportedColor(WHITE, supportedColors))
+            .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    void whenGivenNullAsSupportedColorCollectionThrowUp() {
+        assertThatThrownBy(() -> calculator.findNearestSupportedColor(WHITE, null))
+            .isInstanceOf(IllegalArgumentException.class);
+    }
 }

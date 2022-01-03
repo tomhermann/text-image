@@ -1,17 +1,16 @@
 package net.tomhermann.textimage;
 
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.io.InputStream;
-
-import javax.imageio.ImageIO;
-
 import net.tomhermann.textimage.ascii.AsciiImageProcessor;
 import net.tomhermann.textimage.ascii.ImagePreprocessor;
 import net.tomhermann.textimage.colors.ColorDistanceCalculator;
 import net.tomhermann.textimage.colors.ColorToCharacterConverter;
 import net.tomhermann.textimage.imaging.ImageFilter;
 import net.tomhermann.textimage.support.Dimensions;
+
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.io.InputStream;
 
 import static java.util.Objects.requireNonNull;
 

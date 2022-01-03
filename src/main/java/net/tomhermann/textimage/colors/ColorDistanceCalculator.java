@@ -23,10 +23,10 @@ public class ColorDistanceCalculator {
         }
 
         return supportedColors.stream()
-                .min(comparingDouble(current -> euclideanDistance(color, current)))
-                .stream()
-                .findFirst()
-                .orElse(Color.WHITE);
+            .min(comparingDouble(current -> euclideanDistance(color, current)))
+            .stream()
+            .findFirst()
+            .orElse(Color.WHITE);
     }
 
     private static double sq(double number) {

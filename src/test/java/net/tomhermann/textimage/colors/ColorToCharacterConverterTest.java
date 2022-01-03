@@ -17,30 +17,30 @@ import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class ColorToCharacterConverterTest {
-	@Mock
-	private ColorDistanceCalculator colorDistanceCalculator;
-	@InjectMocks
-	private ColorToCharacterConverter converter;
+    @Mock
+    private ColorDistanceCalculator colorDistanceCalculator;
+    @InjectMocks
+    private ColorToCharacterConverter converter;
 
-	@Test
-	void whenColorHasAnExactMappingUseTheMappedValue() {
-		assertThat(converter.convert(BLACK)).isEqualTo('#');
-	}
+    @Test
+    void whenColorHasAnExactMappingUseTheMappedValue() {
+        assertThat(converter.convert(BLACK)).isEqualTo('#');
+    }
 
-	@Test
-	void whenColorDoesNotHaveAnExactMappingFindNearestSupportedColor() {
-		var pink = Color.PINK;
-		when(colorDistanceCalculator.findNearestSupportedColor(eq(pink), any())).thenReturn(WHITE);
+    @Test
+    void whenColorDoesNotHaveAnExactMappingFindNearestSupportedColor() {
+        var pink = Color.PINK;
+        when(colorDistanceCalculator.findNearestSupportedColor(eq(pink), any())).thenReturn(WHITE);
 
-		var actual = converter.convert(pink);
+        var actual = converter.convert(pink);
 
-		assertThat(actual).isEqualTo(converter.convert(WHITE));
-	}
-	
-	@Test
-	void whenColorHasAnExactMappingDoNotCalculateTheClosestColorDistance() {
-		verify(colorDistanceCalculator, never()).findNearestSupportedColor(any(), any());
+        assertThat(actual).isEqualTo(converter.convert(WHITE));
+    }
 
-		assertThat(converter.convert(BLACK)).isEqualTo('#');
-	}
+    @Test
+    void whenColorHasAnExactMappingDoNotCalculateTheClosestColorDistance() {
+        verify(colorDistanceCalculator, never()).findNearestSupportedColor(any(), any());
+
+        assertThat(converter.convert(BLACK)).isEqualTo('#');
+    }
 }
