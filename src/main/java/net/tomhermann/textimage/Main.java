@@ -24,7 +24,7 @@ public class Main {
     }
 
     public void duck() throws IOException {
-        try (InputStream ducky = Main.class.getResourceAsStream("/Ducky.png")) {
+        try (InputStream ducky = getClass().getResourceAsStream("/Ducky.png")) {
             BufferedImage image = ImageIO.read(requireNonNull(ducky));
 
             asciiProcessor.toAscii(image, new Dimensions(90, 50))
