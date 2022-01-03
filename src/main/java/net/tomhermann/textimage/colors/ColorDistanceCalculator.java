@@ -2,6 +2,7 @@ package net.tomhermann.textimage.colors;
 
 import java.awt.Color;
 import java.util.Collection;
+import java.util.NoSuchElementException;
 
 import static java.util.Comparator.comparingDouble;
 
@@ -24,9 +25,7 @@ public class ColorDistanceCalculator {
 
         return supportedColors.stream()
             .min(comparingDouble(current -> euclideanDistance(color, current)))
-            .stream()
-            .findFirst()
-            .orElse(Color.WHITE);
+            .orElseThrow(NoSuchElementException::new);
     }
 
     private static double sq(double number) {
